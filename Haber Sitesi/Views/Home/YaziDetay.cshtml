@@ -1,0 +1,188 @@
+﻿
+@model Haber_Sitesi.Models.Yazi
+
+@{
+    ViewBag.Title = "YaziDetay";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+            
+@Html.HiddenFor(x=>x.YaziID)
+
+            <!-- Title -->
+            <h1 class="mt-4">@Model.Baslik</h1>
+
+            <hr>
+
+            <!-- Date/Time -->
+            <p>@String.Format("{0: MMMMMMM yyyy}", Model.Tarih) Tarihinde @Model.Uye.Ad @Model.Uye.Soyad Tarafından Yüklendi</p>
+
+            <hr>
+
+            <!-- Preview Image -->
+            <img class="img-fluid rounded" src="@Model.Foto" alt="@Model.Baslik">
+
+            <hr>
+
+            <!-- Post Content -->
+            <p class="lead">@Html.Raw(Model.Metin)</p>
+
+           
+            
+
+            
+
+            <hr>
+
+    @*<select id="puanadresim" class="form-control">
+        <option value="1" >1</option>
+        <option value="2"  >2</option>
+        <option value="3"  >3</option>
+        <option value="4"  >4</option>
+        <option value="5" >5</option>
+    </select> 
+<button type="submit" id="puanver" class="btn btn-primary">Puan Verir misin? Kardeş</button>*@
+
+
+            @if (Session["uyeid"] != null)
+            {
+                 <!-- Comments Form -->
+                <div class="card my-4">
+                    <h5 class="card-header">Yorumunuz:</h5>
+                    <div class="card-body">
+                        <form>
+                            <div class="form-group">
+                                <textarea id="yorum" class="form-control" rows="3"></textarea>
+                            </div>
+                            <button type="submit" id="gonder" class="btn btn-primary">Yorum Yap</button>
+                        </form>
+                    </div>
+                </div>
+            }
+            else
+            {
+
+                <h2>Yazıya yorum yapmak için kullanıcı girişi yapmalısınız</h2>
+                <a href="/Uye/Login">Giriş Yap</a>
+            }
+            @foreach (var item in Model.Yorum.ToList())
+            {
+                <!-- Single Comment -->
+                <div class="media mb-4">
+                    <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                    <div class="media-body">
+                        <h5 class="mt-0">@item.Uye.Ad @item.Uye.Soyad</h5>
+                        @item.Metin - @if(Convert.ToInt32(Session["uyeid"])==item.UyeID|| Convert.ToInt32(Session["yetki"]) == 1)
+                        {
+                            <a class="btn btn-danger" href="/Home/YorumSil/@item.YorumID">Sil</a>
+                        }
+                    </div>
+                </div>
+            }
+          
+
+           
+
+@section Scripts{
+   
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#gonder").click(function () {
+            var yorumum = $("#yorum").val();         
+            var id = $("#YaziID").val();
+           $.ajax({
+                type: "Post",
+                url: "/Home/YorumYap",
+                data: { yorum:yorumum, yaziID:id  },
+                success: function (data) {
+                    alert("Yorumunuz Başarıyla Gönderilmiştir" + yorumum);
+                }
+            });
+        });
+        $("#puanver").click(function () {
+            var puan = $("#puanadresim option:selected").val();
+            var id = $("#YaziID").val();
+            debugger;
+            $.ajax({
+                type: "Post",
+                url: "/Home/Puanver",
+                data: { yorum: yorumum, yaziID: id },
+                success: function (data) {
+                    alert("Yorumunuz Başarıyla Gönderilmiştir" + yorumum);
+                }
+            });
+        });
+    });
+
+</script>
+
+}
+
+
+
+
+
+
+
+
+
+            @*<h2>YaziDetay</h2>
+
+                <div>
+                    <h4>Yazi</h4>
+                    <hr />
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Kategori.KategoriAdi)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Kategori.KategoriAdi)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Uye.KullaniciAdi)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Uye.KullaniciAdi)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Baslik)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Baslik)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Metin)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Metin)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Foto)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Foto)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Tarih)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Tarih)
+                        </dd>
+
+                    </dl>
+                </div>
+                <p>
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.YaziID }) |
+                    @Html.ActionLink("Back to List", "Index")
+                </p>*@

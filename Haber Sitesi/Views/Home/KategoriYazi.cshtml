@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Haber_Sitesi.Models.Yazi>
+
+@{
+    ViewBag.Title = "KategoriYazi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using GridMvc.Html
+<link href="@Url.Content("~/Content/Css/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery-1.10.2.min.js")" > </script>
+<script src="@Url.Content("~/Scripts/gridmvc.min.js")" ></script> 
+<div style="padding-top:100px" class ="col-md-12 ">
+    @Html.Grid(Model).Columns(columns =>
+{
+    columns.Add(y => y.Kategori.KategoriAdi).Titled("Kategori Adı").SetWidth(110).Sortable(true).Filterable(true);
+    columns.Add(y => y.Baslik).Sortable(true).Filterable(true);
+    columns.Add(y => y.Metin).Sortable(true);
+    columns.Add(y => y.Tarih).Sortable(true);
+    //columns.Add().Encoded(false).Sanitized(false).SetWidth(30).RenderValueAs(o => Html.ActionLink("Yaziya Git", "YaziDetay", "Home"));
+
+}).WithPaging(20)
+
+</div>
+
+
+
+
+
+
+@*<div class="col-md-8">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Kategori.KategoriAdi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Uye.KullaniciAdi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Baslik)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Metin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Foto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tarih)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Kategori.KategoriAdi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Uye.KullaniciAdi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Baslik)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Metin)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Foto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tarih)
+                </td>
+
+            </tr>
+        }
+
+    </table>
+</div>*@

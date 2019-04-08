@@ -1,0 +1,23 @@
+﻿@model IEnumerable<Haber_Sitesi.Models.Kategori>
+@{
+    Layout = null;
+}
+<li class="nav-item  dropdown">
+    <a class="nav-link  dropdown-toggle" style="padding-top:1em; color:#007bff" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      
+        @Haber_Sitesi.Resource.Languages.Categories
+    </a>
+    
+
+
+    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
+        @foreach (var item in Model)
+            {
+            
+
+            <a class=" dropdown-item" href="/Home/KategoriYazi/@item.KategoriID">@item.KategoriAdi</a>
+        }
+
+    </div>
+</li>
+

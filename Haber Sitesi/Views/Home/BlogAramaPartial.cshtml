@@ -1,0 +1,15 @@
+﻿@using (Html.BeginForm("BlogArama", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="card my-4">
+        <h5 class="card-header">Arama</h5>
+        <div class="card-body">
+            <div class="input-group">
+                <input id="Ara" name="Ara" type="text" class="form-control" placeholder="Ara...">
+                <span class="input-group-btn">
+                    <button class="btn btn-secondary" value="Ara" type="submit">Ara!</button>
+                </span>
+            </div>
+        </div>
+    </div>
+
+}

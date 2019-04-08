@@ -1,0 +1,20 @@
+﻿body {
+    padding-top:4em;
+    padding-bottom: 20px;
+}
+
+a.my-class {
+    color: #4cff00
+    }
+
+    a.my-class:active {
+        color: #666666
+    }
+
+    a.my-class:link {
+        color: #999999
+    }
+
+    a.my-class:visited {
+        color: #CCCCCC
+    }

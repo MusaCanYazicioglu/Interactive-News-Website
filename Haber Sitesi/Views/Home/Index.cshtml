@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Haber_Sitesi.Models.Yazi>
+@{
+    ViewBag.Title = "Anasayfa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+@foreach (var item in Model)
+{
+    <h2>Anasayfa</h2>
+    <div class="my-4">
+
+        <h2  class="card-title">@item.Baslik</h2>
+
+        <div class="card-footer text-muted">
+            @String.Format("{0: MMMMMMM yyyy}",item.Tarih) tarihinde @item.Uye.Ad @item.Uye.Soyad tarafından yazıldı.
+
+        </div>
+        <!-- Blog Post -->
+        <div class="card mb-4">
+            <img class="card-img-top" src="@item.Foto" alt="@item.Baslik">
+            <div class="card-body">
+                @if (item.Metin.Length > 150)
+                {
+                    <p class="card-text">
+
+                        @Html.Raw(item.Metin.Substring(0, 400))
+                    </p>
+                }
+                else
+                {
+                    <p class="card-text">
+
+                        @Html.Raw(item.Metin) ...
+                    </p>
+                }
+                <div class="row">
+                    <div class="col-md-6"><a href="/Home/YaziDetay/@item.YaziID" class="btn btn-primary">Daha Fazla &rarr;</a></div>
+                    <div align="right" class="col-md-6"><p class="btn btn-success">Teknoloji</p></div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+}

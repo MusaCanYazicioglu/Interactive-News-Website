@@ -1,0 +1,197 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta name="decription" content="" />
+    <meta name="keywords" content="" />
+
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/Site.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
+
+
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/Home/Index">Small Devs</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="nav navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link">
+                            @Html.ActionLink(Haber_Sitesi.Resource.Languages.Home, "Index", "Home")
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+
+                    <!--DropDown-->
+
+
+                    @{
+                        Html.RenderAction("KategoriPartial1", "Home");
+                    }
+
+
+
+
+
+
+                    <li class="nav-item ">
+                        <a class="nav-link">
+
+                            @Html.ActionLink(Haber_Sitesi.Resource.Languages.About, "Hakkimda", "Home", new { @class = "my-class" })
+                        </a>
+                    </li>
+
+                </ul>
+
+                <!--Butonlar-->
+                @if (Session["yetki"] == null)
+                {
+                    <ul class="nav navbar-nav  ml-auto ">
+                        <li class="nav-item">
+                            <a class="nav-link" style="padding-right:3em;">
+                                @Html.ActionLink(Haber_Sitesi.Resource.Languages.Sign, "Create", "Uye")
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" style="margin-bottom:auto;">
+                                @Html.ActionLink(Haber_Sitesi.Resource.Languages.Login, "Login", "Uye")
+                            </a>
+
+                        </li>
+                    </ul>
+
+
+                }
+                else if (Convert.ToInt32(Session["yetki"]) == 1)
+                {
+                    <ul class="nav navbar-nav  ml-auto ">
+                        <li class="nav-item">
+                            <a class="nav-link" style="padding-top:1em; color:#007bff" href="/Admin/Index/">Yönetim Paneli</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="padding-top:1em; color:#007bff" href="/Uye/Logout/">Çıkış</a>
+                        </li>
+                    </ul>
+                }
+                else
+                {
+                    <ul class="nav navbar-nav  ml-auto ">
+                        <li class="nav-item">
+                            <a class="nav-link" style="padding-top:1em; color:#007bff" href="/Uye/Index/">@Session["kullaniciadi"].ToString()</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="padding-top:1em; color:#007bff" href="/UyeYazi/Create/">Yazı Ekle</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" style="padding-top:1em; color:#007bff" href="/Uye/Logout/">Çıkış</a>
+                        </li>
+                    </ul>
+                }
+                @*<li>
+                        <button type="button" class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-user" href="/UyeOl/Create/"></span> ÜYE OL
+                        </button>
+                    </li>
+                    <li class="headaralik">
+                        <button type="button" class="btn btn-success btn-sm ">
+                            <span class="glyphicon glyphicon-log-in" href="/UyeOl/Login/"></span> GİRİŞ
+                        </button>
+                    </li>*@
+
+
+                <ul class="nav navbar-nav  ml-auto ">
+                    <!--Bayraklar-->
+                    <li class="headaralik" style="padding-right:0.5em;">
+                        @Html.ActionLink("TR", "Change", "Language", new { LanguageSelection = "tr" }, null)
+                    </li>
+                    <li class="headaralik">
+                        @Html.ActionLink("ENG", "Change", "Language", new { LanguageSelection = "en" }, null)
+                    </li>
+                </ul>
+
+
+
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div class="row">
+
+            <!-- Blog Gönderileri Kolonu -->
+            <div class="col-md-8 ">
+
+                @RenderBody()
+
+            </div>
+
+            <!-- Arama Widget'ı Kolonu Başlangıç -->
+            <div class="col-md-4">
+
+                <!-- Arama Widget'ı -->
+                @*@Html.Partial("BlogAramaPartial")*@
+
+
+                <!-- Kategoriler Widget'ı -->
+                <div class="card my-4">
+
+
+
+                    @{
+                        Html.RenderAction("KategoriPartial", "Home");
+                    }
+
+
+
+                </div>
+
+                <!-- Widget Barı -->
+                <div class="card my-4">
+                    @{
+                        Html.RenderAction("SonYazilar", "Home");
+                    }
+                </div>
+
+            </div>
+
+        </div>
+        <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; SmallDevs 2017</p>
+        </div>
+        <!-- /.container -->
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+   <!--<script src="@Url.Content("~/Scripts/gridmvc.min.js")" type="text/javascript"> </script>-->
+
+
+    @RenderSection("Scripts",false)
+</body>
+</html>
